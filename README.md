@@ -1,7 +1,381 @@
 # LingXi-assistant-for-Windows
 
-你的智能副驾驶——Your intelligent agent
+**你的智能副驾驶——Your intelligent agent**
 
-用户只需在界面中直接填写自己的 ModelScope API 密钥，即可向灵犀助手发起任意指令。系统支持灵活切换模型，且 ModelScope 为每个模型均提供了极高的免费调用额度，可实现开箱即用。功能涵盖：浏览器及网站的自动化信息检索、本地文件查询与编辑、自动化代码编写与网页开发、基于多模态模型的辅助自动化任务等。此外，用户还可通过“灵犀云聊”（网页版：电脑端访问 http://116.62.84.244:5001/，手机端访问 http://116.62.84.244:5002/）远程指令灵犀助手执行自动化操作，并可实时查看助手所在电脑的屏幕画面。该远程操控功能仅在运行 chat_bot.py 或 chat_bot.exe 并完成相关配置后方可使用（配置过程简便）。
+## 📖 项目简介
 
-Users can directly enter their ModelScope API key into the interface and issue any command to Lingxi Assistant. The system supports flexible model switching, and ModelScope provides an extremely generous free quota for each model, enabling truly out-of-the-box operation. Supported functionalities include: automated web browsing and site searches, local file querying and editing, automated code writing and web page development, and multimodal-model-assisted automation tasks. Furthermore, via Lingxi Cloud Chat (web version: desktop access at http://116.62.84.244:5001/, mobile access at http://116.62.84.244:5002/), users can remotely command Lingxi Assistant to perform automated operations and view the real-time screen of the assistant’s host computer. This remote operation feature is only available after running chat_bot.py or chat_bot.exe and completing the relevant configuration (the configuration process is straightforward).
+灵犀助手是一个运行在 Windows 平台上的智能自动化助手。用户只需在界面中填写自己的 ModelScope API 密钥，即可向灵犀助手发起任意指令。系统支持灵活切换模型，且 ModelScope 为每个模型均提供了极高的免费调用额度，可实现开箱即用。
+
+## 🎯 核心功能
+
+### 1. 智能对话与代码生成
+
+- 自然语言对话交互，支持深度思考模式
+- 自动生成 Python 自动化脚本（.do 文件）
+- 自动执行生成的代码，实现自动化操作
+
+### 2. 自动化操作能力
+
+- 浏览器及网站的自动化信息检索
+- 本地文件查询与编辑
+- 自动化代码编写与网页开发
+- 基于多模态模型的辅助自动化任务
+- 支持图像识别（调用 ModelScope 多模态模型）
+- 支持语音识别（调用 ModelScope 语音模型）
+
+### 3. 远程操控（灵犀云聊）
+
+通过“灵犀云聊”网页版，用户可以：
+- 远程指令灵犀助手执行自动化操作
+- 实时查看助手所在电脑的屏幕画面
+- 接收助手发送的文件
+
+**访问地址：**
+- 电脑端：`http://116.62.84.244:5001/`
+- 手机端：`http://116.62.84.244:5002/`
+
+> 远程操控功能需运行 `chat_bot.py` 并完成相关配置后方可使用。
+
+### 4. .do 自动化脚本系统
+
+- 灵犀助手生成的自动化脚本保存为 `.do` 文件
+- 双击 `.do` 文件可直接执行
+- 支持文件关联（安装时自动注册）
+- 内置执行器包含：代码编辑器与预览、执行历史记录、执行结果自动反馈给助手
+
+### 5. 历史记录
+
+- 自动保存所有聊天记录到 `聊天记录.txt`
+- 提供独立的历史记录查看器
+- 支持清空历史记录
+
+### 6. 用户系统
+
+- 首次启动时自动弹出登录窗口
+- 用户名保存在 `账号记录.txt` 中
+
+## 📁 项目结构
+
+```
+LingXi-assistant-for-Windows/
+├── LingXi.py                 # 主程序：灵犀助手核心
+├── chat_bot.py              # 消息中转服务器（远程操控必需）
+├── execute_app.py           # .do 文件执行器
+├── 登录窗口.py               # 用户登录窗口
+├── 历史记录查看.py           # 聊天记录查看器
+├── data/
+│   ├── assistants.json      # 助手信息数据库
+│   └── config.json          # chat_bot 配置文件
+├── uploads/                 # 文件上传目录
+├── api_key.txt              # API 密钥配置文件（自动生成）
+├── assistant_config.json    # 助手配置文件（自动生成）
+├── 账号记录.txt              # 用户名记录（自动生成）
+├── 聊天记录.txt              # 聊天记录（自动生成）
+└── question.txt             # 跨进程消息传递（自动生成）
+```
+
+## 🚀 使用方法
+
+### 一、首次启动
+
+1. **运行主程序**：执行 `LingXi.py`
+2. **登录**：首次运行会自动弹出登录窗口，输入用户名即可
+3. **配置 API 密钥**：
+   - 点击界面上的“API配置”按钮
+   - 输入你的 ModelScope API Key
+   - 可选：点击“模型配置”选择其他模型
+
+### 二、基础对话
+
+1. 在底部输入框输入问题
+2. 点击“发送”进行普通对话
+3. 点击“副驾驶”让助手生成并执行自动化代码
+
+### 三、自动化任务示例
+
+**示例 1：打开网站**
+```
+帮我打开chrome百度搜索“人工智能”，识别总结成 html 打开来并发给我
+```
+
+**示例 2：文件操作**
+```
+把桌面上的 test.txt 文件内容改成“Hello World.txt”
+```
+
+**示例 3：图像识别**
+```
+识别桌面上的截图.png，告诉我里面有什么
+```
+
+**示例 4：发送文件到灵犀云聊的对应账号**
+```
+把 C:\Users\xxx\Desktop\report.pdf 发给我
+```
+
+**示例 5：代码编程辅助**
+```
+帮我用 Python 写一个贪吃蛇，保存到桌面上的 snake.py
+```
+
+### 四、深度思考模式
+
+点击“深度思考：关闭”按钮可开启深度思考模式。开启后，助手会先展示思考过程，再给出最终答案。
+
+### 五、远程操控（屏幕共享）
+
+**前提条件：**
+1. 启动 `chat_bot.py`
+2. 在灵犀云聊网页端登录助手（使用 chat_bot 生成的助手 ID 和密码）
+
+**操作步骤：**
+1. 确保 `chat_bot.py` 正在运行（默认端口 5004）
+2. 在灵犀云聊网页端向助手发送消息
+3. 如需查看助手屏幕，在网页端发送“开始屏幕共享”
+4. 如需停止，发送“停止屏幕共享”
+
+### 六、.do 文件执行器
+
+`execute_app.py` 是独立的 .do 文件执行器，功能包括：
+
+- **打开 .do 文件**：点击“选择.do文件”或直接双击 .do 文件
+- **执行代码**：点击“执行”按钮运行当前代码
+- **查看输出**：实时显示执行过程中的输出
+- **历史记录**：所有执行记录自动保存，可回溯
+- **发送结果**：执行结果可自动发送给灵犀云聊用户
+- **代码预览**：右侧面板显示当前文件的代码内容
+
+### 七、助手配置
+
+点击“配置”按钮可以：
+- 查看当前助手 ID
+- 修改灵犀云聊端口（默认 5001）
+- 修改助手端口（默认 5003）
+
+### 八、屏幕共享配置
+
+点击“屏幕配置”按钮可以：
+- 调整帧率（默认 10 fps）
+- 调整图像质量（默认 70%）
+
+### 九、端口配置
+
+点击“端口配置”按钮可以设置屏幕共享发送的目标端口（默认同时发送到 5001 和 5002）。
+
+### 十、清空聊天记录
+
+在聊天记录查看器中点击“清空”按钮即可。
+
+## ⚙️ 配置文件说明
+
+| 文件 | 用途 |
+|------|------|
+| `api_key.txt` | 存储 ModelScope API Key 和模型名称 |
+| `assistant_config.json` | 存储助手 ID、主题、端口等配置 |
+| `data/config.json` | chat_bot 配置文件（端口、云端地址等） |
+| `data/assistants.json` | chat_bot 管理的助手信息 |
+
+## 🔧 系统要求
+
+- 操作系统：Windows
+- Python 版本：3.8+
+- 主要依赖：PyQt5、Flask、requests、opencv、pyautogui、keyboard、PIL
+
+## ⚠️ 注意事项
+
+1. **API 密钥安全**：请勿将包含 API 密钥的文件分享给他人
+2. **远程操控**：使用远程功能时，请确保网络环境安全
+3. **自动化操作谨慎**：灵犀助手生成的代码可能执行系统级操作，请确认代码内容后再执行
+4. **首次运行**：会自动生成必要的配置文件和目录
+5. **文件关联**：首次运行 execute_app 时会自动注册 `.do` 文件关联
+
+---
+
+# English Version
+
+## 📖 Introduction
+
+LingXi Assistant is an intelligent automation assistant running on Windows. Users can directly enter their ModelScope API key into the interface and issue any command to LingXi Assistant. The system supports flexible model switching, and ModelScope provides an extremely generous free quota for each model, enabling truly out-of-the-box operation.
+
+## 🎯 Core Features
+
+### 1. Intelligent Conversation and Code Generation
+
+- Natural language conversation with deep thinking mode support
+- Automatically generates Python automation scripts (.do files)
+- Automatically executes generated code to perform automation tasks
+
+### 2. Automation Capabilities
+
+- Automated information retrieval from browsers and websites
+- Local file querying and editing
+- Automated code writing and web page development
+- Multimodal-model-assisted automation tasks
+- Image recognition support (using ModelScope multimodal models)
+- Speech recognition support (using ModelScope speech models)
+
+### 3. Remote Control (LingXi Cloud Chat)
+
+Through the LingXi Cloud Chat web interface, users can:
+- Remotely command LingXi Assistant to perform automation tasks
+- View the assistant's computer screen in real time
+- Receive files sent by the assistant
+
+**Access URLs:**
+- PC: `http://116.62.84.244:5001/`
+- Mobile: `http://116.62.84.244:5002/`
+
+> Remote control requires running `chat_bot.py` and completing the relevant configuration.
+
+### 4. .do Automation Script System
+
+- Automation scripts generated by LingXi Assistant are saved as `.do` files
+- Double-click `.do` files to execute them directly
+- File association support (automatically registered on first run)
+- Built-in executor includes: code editor with preview, execution history, automatic result feedback to assistant
+
+### 5. Chat History
+
+- All chat records are automatically saved to `聊天记录.txt`
+- Independent history viewer provided
+- Support for clearing history
+
+### 6. User System
+
+- Login window automatically appears on first startup
+- Username saved in `账号记录.txt`
+
+## 📁 Project Structure
+
+```
+LingXi-assistant-for-Windows/
+├── LingXi.py                 # Main program: LingXi Assistant core
+├── chat_bot.py              # Message relay server (required for remote control)
+├── execute_app.py           # .do file executor
+├── 登录窗口.py               # User login window
+├── 历史记录查看.py           # Chat history viewer
+├── data/
+│   ├── assistants.json      # Assistant database
+│   └── config.json          # chat_bot configuration file
+├── uploads/                 # File upload directory
+├── api_key.txt              # API key config file (auto-generated)
+├── assistant_config.json    # Assistant config file (auto-generated)
+├── 账号记录.txt              # Username record (auto-generated)
+├── 聊天记录.txt              # Chat history (auto-generated)
+└── question.txt             # Cross-process message passing (auto-generated)
+```
+
+## 🚀 Usage Guide
+
+### 1. First Launch
+
+1. **Run the main program**: Execute `LingXi.py`
+2. **Login**: The login window will automatically appear on first run, enter a username
+3. **Configure API Key**:
+   - Click the "API配置" button on the interface
+   - Enter your ModelScope API Key
+   - Optional: Click "模型配置" to select a different model
+
+### 2. Basic Conversation
+
+1. Enter your question in the input box at the bottom
+2. Click "发送" for normal conversation
+3. Click "副驾驶" to have the assistant generate and execute automation code
+
+### 3. Automation Task Examples
+
+**Example 1: Open a website**
+```
+Help me open Chrome, search Baidu for "artificial intelligence", recognize and summarize as HTML, open it, and send it to me
+```
+
+**Example 2: File operations**
+```
+Change the content of test.txt on the desktop to "Hello World.txt"
+```
+
+**Example 3: Image recognition**
+```
+Recognize what's in screenshot.png on the desktop and tell me
+```
+
+**Example 4: Send a file to the corresponding account on LingXi Cloud Chat**
+```
+Send C:\Users\xxx\Desktop\report.pdf to me
+```
+
+**Example 5: Code programming assistance**
+```
+Help me write a Snake game in Python and save it as snake.py on the desktop
+```
+
+### 4. Deep Thinking Mode
+
+Click the "深度思考：关闭" button to enable deep thinking mode. When enabled, the assistant will first show its reasoning process before providing the final answer.
+
+### 5. Remote Control (Screen Sharing)
+
+**Prerequisites:**
+1. Run `chat_bot.py`
+2. Log into the assistant on LingXi Cloud Chat web interface (using the assistant ID and password generated by chat_bot)
+
+**Steps:**
+1. Ensure `chat_bot.py` is running (default port 5004)
+2. Send a message to the assistant on LingXi Cloud Chat web interface
+3. To view the assistant's screen, send "开始屏幕共享" on the web interface
+4. To stop, send "停止屏幕共享"
+
+### 6. .do File Executor
+
+`execute_app.py` is an independent .do file executor with the following features:
+
+- **Open .do files**: Click "选择.do文件" or double-click a .do file
+- **Execute code**: Click the "执行" button to run the current code
+- **View output**: Real-time display of execution output
+- **History**: All execution records are automatically saved and can be reviewed
+- **Send results**: Execution results can be automatically sent to LingXi Cloud Chat users
+- **Code preview**: The right panel displays the content of the current file
+
+### 7. Assistant Configuration
+
+Click the "配置" button to:
+- View the current assistant ID
+- Modify the LingXi Cloud Chat port (default 5001)
+- Modify the assistant port (default 5003)
+
+### 8. Screen Sharing Configuration
+
+Click the "屏幕配置" button to:
+- Adjust frame rate (default 10 fps)
+- Adjust image quality (default 70%)
+
+### 9. Port Configuration
+
+Click the "端口配置" button to set the target ports for screen sharing (default: send to both 5001 and 5002).
+
+### 10. Clear Chat History
+
+Click the "清空" button in the chat history viewer.
+
+## ⚙️ Configuration Files
+
+| File | Purpose |
+|------|---------|
+| `api_key.txt` | Stores ModelScope API Key and model name |
+| `assistant_config.json` | Stores assistant ID, theme, ports, etc. |
+| `data/config.json` | chat_bot configuration (ports, cloud URLs, etc.) |
+| `data/assistants.json` | chat_bot managed assistant information |
+
+## 🔧 System Requirements
+
+- Operating System: Windows
+- Python Version: 3.8+
+- Main Dependencies: PyQt5, Flask, requests, opencv, pyautogui, keyboard, PIL
+
+## ⚠️ Important Notes
+
+1. **API Key Security**: Do not share files containing your API key with others
+2. **Remote Control**: Ensure your network environment is secure when using remote features
+3. **Automation Caution**: Code generated by LingXi Assistant may perform system-level operations, review the code before execution
+4. **First Run**: Necessary configuration files and directories will be automatically generated
+5. **File Association**: The first time you run execute_app, it will automatically register `.do` file association
