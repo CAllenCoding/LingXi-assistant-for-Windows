@@ -1,2 +1,5 @@
-# LingXi-assistant-for-Windows
-你的智能副驾驶——Your intelligent agent
+#LingXi-assistant-for-Windows
+#你的智能副驾驶——Your intelligent agent
+用户只需在界面中直接填写自己的 ModelScope API 密钥，即可向灵犀助手发起任意指令。系统支持灵活切换模型，且 ModelScope 为每个模型均提供了极高的免费调用额度，可实现开箱即用。功能涵盖：浏览器及网站的自动化信息检索、本地文件查询与编辑、自动化代码编写与网页开发、基于多模态模型的辅助自动化任务等。此外，用户还可通过“灵犀云聊”（网页版：电脑端访问 http://116.62.84.244:5001/，手机端访问 http://116.62.84.244:5002/）远程指令灵犀助手执行自动化操作，并可实时查看助手所在电脑的屏幕画面。该远程操控功能仅在运行 chat_bot.py 或 chat_bot.exe 并完成相关配置后方可使用（配置过程简便）。
+
+Users can directly enter their ModelScope API key into the interface and issue any command to Lingxi Assistant. The system supports flexible model switching, and ModelScope provides an extremely generous free quota for each model, enabling truly out-of-the-box operation. Supported functionalities include: automated web browsing and site searches, local file querying and editing, automated code writing and web page development, and multimodal-model-assisted automation tasks. Furthermore, via Lingxi Cloud Chat (web version: desktop access at http://116.62.84.244:5001/, mobile access at http://116.62.84.244:5002/), users can remotely command Lingxi Assistant to perform automated operations and view the real-time screen of the assistant’s host computer. This remote operation feature is only available after running chat_bot.py or chat_bot.exe and completing the relevant configuration (the configuration process is straightforward).
